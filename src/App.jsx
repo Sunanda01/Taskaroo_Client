@@ -8,6 +8,7 @@ import { Home } from "./pages/home";
 import { ForgotPassword } from "./pages/ForgetPassword";
 import { UpdatePassword } from "./pages/UpdatePassword";
 import { UpdateUserDetails } from "./pages/UpdateUserDetails";
+import { ErrorPage } from "./pages/ErrorPage";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/forgetPassword" element={<ForgotPassword />} />
           <Route path="/updatePassword" element={<UpdatePassword />} />
           <Route path="/updateUser" element={<UpdateUserDetails />} />
+          <Route path="/errorPage" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     </>

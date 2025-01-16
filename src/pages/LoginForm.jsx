@@ -49,11 +49,12 @@ export function LoginForm() {
       }}
     >
       <div className="w-full max-w-md p-6 shadow-md rounded-md bg-opacity-25 bg-black">
-        <div className="flex justify-center gap-3 "> 
-      <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10 mt-2" />
-        <h1 className="text-2xl font-bold mt-2 text-center text-white">
-          SignUp
-        </h1></div>
+        <div className="flex justify-center gap-3 ">
+          <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10 mt-2" />
+          <h1 className="text-2xl font-bold mt-2 text-center text-white">
+            LogIn
+          </h1>
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -92,9 +93,6 @@ export function LoginForm() {
                       className="block w-full rounded-md shadow-sm focus:border-blue-500 "
                     />
                   </FormControl>
-                  <FormDescription className="text-slate-400">
-                    Please enter the one-time password sent to your email.
-                  </FormDescription>
 
                   <FormMessage />
                 </FormItem>

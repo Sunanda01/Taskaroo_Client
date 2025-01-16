@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 
 const formSchema = z
   .object({
-    name: z.string().min(2, { message: "name must have 2 characters" }).max(50),
+    name: z.string().min(2, { message: "Name must have 2 characters" }).max(50),
     email: z
       .string()
       .min(1, { message: "This is required" })
@@ -62,11 +62,11 @@ export function RegisterForm() {
       }}
     >
       <div className="w-full max-w-md p-6 shadow-md rounded-md bg-opacity-25 bg-black">
-      <div className="flex justify-center gap-3 "> 
-      <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10 mt-2" />
-        <h1 className="text-2xl font-bold mt-2 text-center text-white">
-          SignUp
-        </h1>
+        <div className="flex justify-center gap-3 ">
+          <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10 mt-2" />
+          <h1 className="text-2xl font-bold mt-2 text-center text-white">
+            SignUp
+          </h1>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -75,7 +75,7 @@ export function RegisterForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-blue-400 ">
+                  <FormLabel className="block text-sm font-medium text-blue-500">
                     Name
                   </FormLabel>
                   <FormControl>
@@ -106,6 +106,9 @@ export function RegisterForm() {
                     />
                   </FormControl>
                   <FormMessage />
+                  <FormDescription className=" text-red-500 text-xs font-bold ">
+                    Note: Email once registered cannot be updated
+                  </FormDescription>
                 </FormItem>
               )}
             />

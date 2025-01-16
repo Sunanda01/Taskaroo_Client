@@ -31,16 +31,16 @@ export function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div
-        className="w-full max-w-md p-6 shadow-md rounded-md bg-black bg-opacity-25"
-        style={{
-          backgroundImage: "url('/background.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{
+        backgroundImage: "url('/3398381.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="w-full max-w-md p-6 shadow-md rounded-md bg-black bg-opacity-25">
         {step === 1 && (
           // Render EnterEmail component
           <EnterEmail

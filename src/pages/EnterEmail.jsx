@@ -39,12 +39,13 @@ export function EnterEmail({ onSubmit }) {
 
   return (
     <div>
-      <div className="flex justify-center gap-3 "> 
-      <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10 mt-2" />
-        
-      <h1 className="text-2xl font-bold mt-2 text-center text-green-600">
-        Forgot Password
-      </h1></div>
+      <div className="flex justify-center gap-3 ">
+        <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10 mt-2" />
+
+        <h1 className="text-2xl font-bold mt-2 text-center text-white">
+          Forgot Password
+        </h1>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmitHandler)}

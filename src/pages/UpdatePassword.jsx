@@ -55,21 +55,23 @@ export function UpdatePassword() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white ">
-      <div
-        className="w-full max-w-md p-6 drop-shadow-md rounded-md"
-        style={{
-          backgroundImage: "url('/background.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="flex justify-center gap-3 "> 
-        <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10" />
-        <h1 className="text-3xl font-bold mb-5 text-center text-green-600 ">
-          Update Password
-        </h1></div>
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{
+        backgroundImage: "url('/3398381.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="w-full max-w-md p-6 drop-shadow-md rounded-md bg-opacity-25 bg-black">
+        <div className="flex justify-center gap-3 ">
+          <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10" />
+
+          <h1 className="text-3xl font-bold mb-5 text-center text-white ">
+            Update Password
+          </h1>
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -77,7 +79,7 @@ export function UpdatePassword() {
               name="oldPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-bold text-pink-700  ">
+                  <FormLabel className="block text-sm font-bold text-blue-500  ">
                     Old Password
                   </FormLabel>
                   <FormControl>
@@ -85,7 +87,7 @@ export function UpdatePassword() {
                       type="password"
                       placeholder="Enter Your Password"
                       {...field}
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 "
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm  focus:border-pink-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -98,7 +100,7 @@ export function UpdatePassword() {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-bold text-pink-700 ">
+                  <FormLabel className="block text-sm font-bold text-blue-500">
                     New Password
                   </FormLabel>
                   <FormControl>
@@ -119,7 +121,7 @@ export function UpdatePassword() {
               name="confirmNewPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-bold text-pink-700 ">
+                  <FormLabel className="block text-sm font-bold text-blue-500">
                     Confirm New Password
                   </FormLabel>
                   <FormControl>
@@ -136,7 +138,7 @@ export function UpdatePassword() {
             />
             <div className="flex justify-center">
               <Button
-                className=" focus:outline-none py-2 px-4 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className=" focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
                 Update

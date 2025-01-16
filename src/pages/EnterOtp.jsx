@@ -16,7 +16,7 @@ import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@/components/ui/InputOTP";
+} from "@/components/ui/input-otp";
 import PropTypes from "prop-types";
 
 const FormSchema = z.object({
@@ -66,7 +66,7 @@ export function EnterOtp({ onSubmit }) {
             name="otp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-2xl font-bold mb-5 text-center text-green-600">
+                <FormLabel className="text-2xl font-bold mb-5 text-white">
                   One-Time Password
                 </FormLabel>
                 <FormControl>
@@ -78,6 +78,7 @@ export function EnterOtp({ onSubmit }) {
                     <InputOTPGroup>
                       {Array.from({ length: 4 }).map((_, index) => (
                         <InputOTPSlot
+                          className="focus:outline-none bg-green-100 border-green-600 w-20 font-bold text-xl"
                           key={index}
                           index={index}
                           value={field.value[index] || ""} // Extract digit for this slot
@@ -88,7 +89,7 @@ export function EnterOtp({ onSubmit }) {
                   </InputOTP>
                 </FormControl>
                 <FormDescription
-                  className="text-black ml-1 text-sm font-bold"
+                  className="focus:outline-none text-red-500 ml-1 text-xs font-bold "
                   style={{ marginTop: "0.9rem" }}
                 >
                   Please enter the one-time password sent to your email.
@@ -97,17 +98,16 @@ export function EnterOtp({ onSubmit }) {
               </FormItem>
             )}
           />
-          <div className="flex justify-evenly ">
+          <div className="flex flex-col items-center justify-center">
             <Button
               type="submit"
-              className=" focus:outline-none py-2 px-4 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-              style={{ marginTop: "0.9rem" }}
+              className="flex  focus:outline-none py-2 px-4 w-28 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Submit
             </Button>
             <Button
-              type="button"
-              className=" focus:outline-none py-2 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              type="button "
+              className="flex focus:outline-none py-2 px-4 w-28 bg-red-500 hover:bg-red-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               style={{ marginTop: "0.9rem" }}
             >
               Resend OTP
