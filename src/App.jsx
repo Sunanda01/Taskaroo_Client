@@ -3,13 +3,15 @@ import { RegisterForm } from "./pages/registerForm";
 import { LoginForm } from "./pages/LoginForm";
 // import { EnterOtp } from "./pages/EnterOtp";
 import { Toaster } from "./components/ui/toaster";
-import { Home } from "./pages/home";
+import { HomePage } from "./pages/HomePage";
 // import { EnterEmail } from "./pages/EnterEmail";
 import { ForgetPassword } from "./pages/ForgetPassword";
 import { UpdatePassword } from "./pages/UpdatePassword";
 import { UpdateUserDetails } from "./pages/UpdateUserDetails";
 import { ErrorPage } from "./pages/ErrorPage";
 import { OtpVerify } from "./pages/OtpVerify";
+import {LandingPage} from "./pages/LandingPage";
+import {UpdateTodo} from "./pages/UpdateTodo";
 
 export default function App() {
   return (
@@ -20,13 +22,15 @@ export default function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
           {/* <Route path="/enterOtp" element={<EnterOtp/>}/> */}
-          {/* <Route path="/home" element={<Home />} /> */}
+          <Route path="/home" element={<HomePage/>} />
           {/* <Route path="/enterEmail" element={<EnterEmail />} /> */}
           <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/updatePassword" element={<UpdatePassword />} />
           <Route path="/updateUser" element={<UpdateUserDetails />} />
           <Route path="/errorPage" element={<ErrorPage />} />
           <Route path="/verify-otp" element={<OtpVerify/>}/>
+          <Route path="/landing-page" element={<LandingPage/>}/>
+          <Route path="/update-todo" element={<UpdateTodo/>}/>
         </Routes>
       </BrowserRouter>
     </>
