@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { EnterEmail } from "../pages/EnterEmail"; // Import EnterEmail component
 import { EnterOtp } from "../pages/EnterOtp"; // Import EnterOtp component
-import useCountdown from "@/CustomComponents/useCountdown";
+import useCountdown from "@/CustomHooks/useCountdown";
 
 export function ForgetPassword() {
   const [step, setStep] = useState(1); // Manage steps (1: Enter Email, 2: Enter OTP)

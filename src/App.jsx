@@ -9,6 +9,7 @@ import { ForgetPassword } from "./pages/ForgetPassword";
 import { UpdatePassword } from "./pages/UpdatePassword";
 import { UpdateUserDetails } from "./pages/UpdateUserDetails";
 import { ErrorPage } from "./pages/ErrorPage";
+import { OtpVerify } from "./pages/OtpVerify";
 
 export default function App() {
   return (
@@ -19,12 +20,13 @@ export default function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
           {/* <Route path="/enterOtp" element={<EnterOtp/>}/> */}
-          <Route path="/home" element={<Home />} />
+          {/* <Route path="/home" element={<Home />} /> */}
           {/* <Route path="/enterEmail" element={<EnterEmail />} /> */}
           <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/updatePassword" element={<UpdatePassword />} />
           <Route path="/updateUser" element={<UpdateUserDetails />} />
           <Route path="/errorPage" element={<ErrorPage />} />
+          <Route path="/verify-otp" element={<OtpVerify/>}/>
         </Routes>
       </BrowserRouter>
     </>

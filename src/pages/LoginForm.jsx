@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-
+import { Link } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -99,13 +99,33 @@ export function LoginForm() {
               )}
             />
 
-            <div className="flex justify-center">
+            <div className="flex justify-center flex-col items-center">
+              <Link
+                to="/forgetPassword"
+                className=" text-white text-md font-bold flex "
+              >
+                Forgot Password ?
+              </Link>
               <Button
-                className=" focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="flex mt-4 w-36 focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
                 Submit
               </Button>
+              <div className="text-white text-md font-bold flex justify-center items-center gap-2 mt-4">
+                <Link to="/register" className="flex items-center">
+                  <span>Create New User Account</span>
+                  <div
+                    className="h-4 w-4 ml-2"
+                    style={{
+                      backgroundImage: "url('/add.png')",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                    }}
+                  ></div>
+                </Link>
+              </div>
             </div>
           </form>
         </Form>

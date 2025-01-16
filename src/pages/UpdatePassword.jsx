@@ -87,7 +87,7 @@ export function UpdatePassword() {
                       type="password"
                       placeholder="Enter Your Password"
                       {...field}
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm  focus:border-pink-500"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm  focus:border-blue-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -108,7 +108,7 @@ export function UpdatePassword() {
                       type="password"
                       placeholder="Enter Your Password"
                       {...field}
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 "
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 "
                     />
                   </FormControl>
                   <FormMessage />
@@ -129,7 +129,7 @@ export function UpdatePassword() {
                       type="password"
                       placeholder="Re-enter Your Password"
                       {...field}
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 "
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 "
                     />
                   </FormControl>
                   <FormMessage />

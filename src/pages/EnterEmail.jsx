@@ -60,7 +60,7 @@ export function EnterEmail({ onSubmit }) {
                   <Input
                     placeholder="Enter Your Email"
                     {...field}
-                    className="block w-full mt-5 border-gray-300 rounded-md shadow-sm focus:border-pink-500 "
+                    className="block w-full mt-5 border-gray-300 rounded-md shadow-sm focus:border-blue-500 "
                   />
                 </FormControl>
                 <FormDescription className="text-red-500 ml-1 text-xs font-bold">

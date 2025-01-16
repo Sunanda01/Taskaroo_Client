@@ -66,7 +66,7 @@ export function UpdateUserDetails() {
                     <Input
                       placeholder="Enter Your Name"
                       {...field}
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 "
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 "
                     />
                   </FormControl>
                   <FormMessage />
@@ -87,7 +87,7 @@ export function UpdateUserDetails() {
                       placeholder=""
                       {...field}
                       disabled
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 cursor-not-allowed "
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm  cursor-not-allowed "
                     />
                   </FormControl>
                   <FormDescription className="text-red-500 ml-1 text-xs font-bold">
