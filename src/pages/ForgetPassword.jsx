@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { EnterEmail } from "../pages/EnterEmail"; // Import EnterEmail component
 import { EnterOtp } from "../pages/EnterOtp"; // Import EnterOtp component
+import useCountdown from "@/CustomComponents/useCountdown";
 
-export function ForgotPassword() {
+export function ForgetPassword() {
   const [step, setStep] = useState(1); // Manage steps (1: Enter Email, 2: Enter OTP)
   const [data, setData] = useState({
     email: "",
     otp: "",
   });
-
+  const { secondLeft, start } = useCountdown();
   // Handler for email submission
   const handleEmailSubmit = (emailValue) => {
     setData((prevData) => ({
@@ -16,6 +17,7 @@ export function ForgotPassword() {
       email: emailValue, // Save the email
     }));
     setStep(2); // Move to the OTP step
+    start(120);
   };
 
   // Handler for OTP submission
@@ -24,10 +26,16 @@ export function ForgotPassword() {
       ...prevData,
       otp: otpValue, // Save the OTP
     }));
+
     console.log("Email:", data.email); // Log email for debugging
     console.log("OTP:", otpValue); // Log OTP for debugging
 
     // Add further actions, e.g., API calls for verification
+  };
+
+  const handleResendotp = () => {
+    console.log("Resending OTP");
+    start(120);
   };
 
   return (
@@ -51,6 +59,8 @@ export function ForgotPassword() {
           // Render EnterOtp component
           <EnterOtp
             onSubmit={(values) => handleOtpSubmit(values.otp)} // Pass handler for OTP submission
+            secondLeft={secondLeft}
+            onResendotp={handleResendotp}
           />
         )}
       </div>

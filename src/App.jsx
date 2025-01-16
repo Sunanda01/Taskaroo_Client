@@ -5,7 +5,7 @@ import { LoginForm } from "./pages/LoginForm";
 import { Toaster } from "./components/ui/toaster";
 import { Home } from "./pages/home";
 // import { EnterEmail } from "./pages/EnterEmail";
-import { ForgotPassword } from "./pages/ForgetPassword";
+import { ForgetPassword } from "./pages/ForgetPassword";
 import { UpdatePassword } from "./pages/UpdatePassword";
 import { UpdateUserDetails } from "./pages/UpdateUserDetails";
 import { ErrorPage } from "./pages/ErrorPage";
@@ -21,7 +21,7 @@ export default function App() {
           {/* <Route path="/enterOtp" element={<EnterOtp/>}/> */}
           <Route path="/home" element={<Home />} />
           {/* <Route path="/enterEmail" element={<EnterEmail />} /> */}
-          <Route path="/forgetPassword" element={<ForgotPassword />} />
+          <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/updatePassword" element={<UpdatePassword />} />
           <Route path="/updateUser" element={<UpdateUserDetails />} />
           <Route path="/errorPage" element={<ErrorPage />} />
