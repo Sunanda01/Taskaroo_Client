@@ -66,7 +66,7 @@ export function EnterOtp({ onSubmit }) {
             name="otp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xl font-bold text-center text-white">
+                <FormLabel className="text-2xl font-bold mb-5 text-center text-green-600">
                   One-Time Password
                 </FormLabel>
                 <FormControl>
@@ -88,7 +88,7 @@ export function EnterOtp({ onSubmit }) {
                   </InputOTP>
                 </FormControl>
                 <FormDescription
-                  className="text-slate-400"
+                  className="text-black ml-1 text-sm font-bold"
                   style={{ marginTop: "0.9rem" }}
                 >
                   Please enter the one-time password sent to your email.
@@ -97,20 +97,22 @@ export function EnterOtp({ onSubmit }) {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="w-full bg-green-500 hover:bg-green-600 "
-            style={{ marginTop: "0.9rem" }}
-          >
-            Submit
-          </Button>
-          <Button
-            type="button"
-            className="w-full bg-red-500 hover:bg-red-600 "
-            style={{ marginTop: "0.9rem" }}
-          >
-            Resend OTP
-          </Button>
+          <div className="flex justify-evenly ">
+            <Button
+              type="submit"
+              className=" focus:outline-none py-2 px-4 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              style={{ marginTop: "0.9rem" }}
+            >
+              Submit
+            </Button>
+            <Button
+              type="button"
+              className=" focus:outline-none py-2 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              style={{ marginTop: "0.9rem" }}
+            >
+              Resend OTP
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

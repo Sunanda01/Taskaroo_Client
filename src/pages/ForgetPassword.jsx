@@ -28,20 +28,19 @@ export function ForgotPassword() {
     console.log("OTP:", otpValue); // Log OTP for debugging
 
     // Add further actions, e.g., API calls for verification
-    
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center"
-      style={{
-        backgroundImage: "url('/3398381.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="w-full max-w-md p-6 shadow-md rounded-md bg-black bg-opacity-25">
+    <div className="min-h-screen flex items-center justify-center">
+      <div
+        className="w-full max-w-md p-6 shadow-md rounded-md bg-black bg-opacity-25"
+        style={{
+          backgroundImage: "url('/background.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         {step === 1 && (
           // Render EnterEmail component
           <EnterEmail

@@ -18,7 +18,7 @@ export function InputOTPSlot({ index, value, onChange }) {
     <input
       type="text"
       maxLength={1}
-      className="h-12 w-14 text-xl text-center border rounded bg-gray-100 mt-2"
+      className="h-12 w-14 text-xl text-center border rounded bg-gray-100 mt-2 border-green-400"
       value={value}
       onChange={(e) => {
         const val = e.target.value;

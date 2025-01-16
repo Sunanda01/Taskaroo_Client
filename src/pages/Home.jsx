@@ -27,10 +27,10 @@ const components = [
 
 export function Home() {
   return (
-    
+    <>
       <NavigationMenu className=" bg-yellow-300 w-full">
         <div className="flex items-center space-x-4">
-          <img src="/logo.png" alt="Logo" className="h-20 w-36 mt-2" />{" "}
+          <img src="/Taskaroo.png" alt="Logo" className="h-20 w-20 mt-2" />
           {/* Adjust size as needed */}
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -40,6 +40,20 @@ export function Home() {
                   className="block p-3 rounded-md hover:bg-accent"
                 >
                   Documentation
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink>
+                <Link to="/forgetPassword">
+                  <Button>Forget Password</Button>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink>
+                <Link to="/register">
+                  <Button>SignUp</Button>
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -53,14 +67,6 @@ export function Home() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuLink>
-                <Link to="/register">
-                  <Button>SignUp</Button>
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
               <NavigationMenuTrigger>
                 <Avatar>
                   <AvatarImage src="https://github.com/shadcn.png" />
@@ -69,16 +75,22 @@ export function Home() {
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 max-w-[300px] w-full md:w-[400px] lg:w-[500px] lg:grid-rows-[.75fr_1fr]">
-                  <ListItem href="/" title="Update Profile"></ListItem>
-                  <ListItem href="/" title="Update Password"></ListItem>
-                  <ListItem href="/" title="Logout"></ListItem>
+                  <ListItem
+                    href="/updateUser"
+                    title="Update Profile"
+                  ></ListItem>
+                  <ListItem
+                    href="/updatePassword"
+                    title="Update Password"
+                  ></ListItem>
+                  <ListItem href="/logout" title="Logout"></ListItem>
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>
         </div>
       </NavigationMenu>
-    
+    </>
   );
 }
 

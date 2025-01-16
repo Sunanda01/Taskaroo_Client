@@ -14,16 +14,36 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const formSchema = z.object({
-  name: z.string().min(2, { message: "name must have 2 characters" }).max(50),
-});
+const formSchema = z
+  .object({
+    oldPassword: z
+      .string()
+      .min(1, { message: "This is required" })
+      .min(5)
+      .max(10),
+    newPassword: z
+      .string()
+      .min(1, { message: "This is required" })
+      .min(5)
+      .max(10),
+    confirmNewPassword: z
+      .string()
+      .min(1, { message: "Must match with Password Field" })
+      .min(5)
+      .max(10),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    path: ["confirmNewPassword"],
+    message: "Passwords do not match",
+  });
 
-export function UpdateUserDetails() {
+export function UpdatePassword() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "Sunanda Sadhukhan",
-      email: "sunandasadhukhan1@gmail.com",
+      oldPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
     },
   });
   async function onSubmit(values) {
@@ -46,24 +66,24 @@ export function UpdateUserDetails() {
         }}
       >
         <div className="flex justify-center gap-3 "> 
-      <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10" />
-        
+        <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10" />
         <h1 className="text-3xl font-bold mb-5 text-center text-green-600 ">
-          Update Profile
+          Update Password
         </h1></div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="name"
+              name="oldPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-bold text-pink-700 ">
-                    Your Name
+                  <FormLabel className="block text-sm font-bold text-pink-700  ">
+                    Old Password
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter Your Name"
+                      type="password"
+                      placeholder="Enter Your Password"
                       {...field}
                       className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 "
                     />
@@ -75,28 +95,45 @@ export function UpdateUserDetails() {
 
             <FormField
               control={form.control}
-              name="email"
+              name="newPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="block text-sm font-bold text-pink-700 ">
-                    Registered Email
+                    New Password
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder=""
+                      type="password"
+                      placeholder="Enter Your Password"
                       {...field}
-                      disabled
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 cursor-not-allowed "
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 "
                     />
                   </FormControl>
-                  <FormDescription className="text-red-500 ml-1 text-xs font-bold">
-                    Note: EMAIL cannot be Updated
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="confirmNewPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="block text-sm font-bold text-pink-700 ">
+                    Confirm New Password
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Re-enter Your Password"
+                      {...field}
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-pink-500 "
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <div className="flex justify-center">
               <Button
                 className=" focus:outline-none py-2 px-4 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
