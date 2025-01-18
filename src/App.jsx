@@ -12,6 +12,7 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { OtpVerify } from "./pages/OtpVerify";
 import {LandingPage} from "./pages/LandingPage";
 import {UpdateTodo} from "./pages/UpdateTodo";
+import { Home2 } from "./pages/Home2";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/login" element={<LoginForm />} />
           {/* <Route path="/enterOtp" element={<EnterOtp/>}/> */}
           <Route path="/home" element={<HomePage/>} />
+          <Route path="/home2" element={<Home2/>} />
           {/* <Route path="/enterEmail" element={<EnterEmail />} /> */}
           <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/updatePassword" element={<UpdatePassword />} />
