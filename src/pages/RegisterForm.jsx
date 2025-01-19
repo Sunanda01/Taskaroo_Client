@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import {
   Form,
   FormControl,
@@ -17,10 +18,12 @@ import { Input } from "@/components/ui/input";
 const formSchema = z
   .object({
     name: z.string().min(2, { message: "Name must have 2 characters" }).max(50),
+
     email: z
       .string()
       .min(1, { message: "This is required" })
       .email({ message: "Must be a valid email" }),
+
     password: z.string().min(1, { message: "This is required" }).min(5).max(10),
     confirmPassword: z
       .string()
@@ -34,6 +37,9 @@ const formSchema = z
   });
 
 export function RegisterForm() {
+  const cloudinaryUrl = import.meta.env.VITE_CLOUDINARY_URL;
+  const [img, setImg] = useState(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,9 +49,50 @@ export function RegisterForm() {
       confirmPassword: "",
     },
   });
-  async function onSubmit(values) {
+
+  const upload = async () => {
+    if (!img) {
+      alert("Please select a file before uploading.");
+      return;
+    }
+
+    const form = new FormData();
+    form.append("file", img);
+    form.append("upload_preset", "UploadProfileImg");
+
     try {
-      console.log(values);
+      const res = await fetch(cloudinaryUrl, {
+        method: "POST",
+        body: form,
+      });
+
+      const data = await res.json();
+      console.log("Response:", data);
+
+      if (!res.ok) {
+        throw new Error("Upload failed");
+      }
+
+      // Add the uploaded file info to the state
+      setUploadedImageUrl(data.secure_url);
+      console.log("Uploaded successfully:", data);
+    } catch (err) {
+      console.error("Upload failed:", err.message);
+    }
+  };
+
+  async function onSubmit(values) {
+    if (!uploadedImageUrl) {
+      alert("Please upload a profile picture before submitting.");
+      return;
+    }
+    try {
+      const finalData = {
+        ...values,
+        profilePicture: uploadedImageUrl, // Add secure URL to form data
+      };
+      localStorage.setItem("ProfileImage", uploadedImageUrl);
+      console.log(finalData);
     } catch (err) {
       console.log(err, "Error during submission");
     }
@@ -75,7 +122,7 @@ export function RegisterForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-blue-500">
+                  <FormLabel className="block text-sm font-medium text-blue-400">
                     Name
                   </FormLabel>
                   <FormControl>
@@ -89,6 +136,31 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
+
+            <FormItem>
+              <FormLabel className="block text-sm font-medium text-blue-400">
+                Upload Your Profile Picture
+              </FormLabel>
+              <FormControl className="text-white font-bold text-sm ">
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    setImg(file);
+                  }}
+                />
+              </FormControl>
+              <FormControl>
+                <button
+                  className=" rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-green-700  text-md font-bold w-20 h-8 hover:bg-green-800 focus:border-white text-white"
+                  onClick={upload}
+                  disabled={!img}
+                >
+                  Upload
+                </button>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
 
             <FormField
               control={form.control}
@@ -154,6 +226,7 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
+
             <div className="flex justify-center flex-col items-center">
               <Button
                 className=" focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
