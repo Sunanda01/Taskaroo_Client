@@ -39,7 +39,7 @@ function Navbar() {
                     href="/updatePassword"
                     title="Update Password"
                   ></ListItem>
-                  <ListItem href="/home" title="Logout"></ListItem>
+                  <ListItem href="/landing-page" title="Logout"></ListItem>
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>

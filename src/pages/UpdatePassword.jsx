@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-
+import Navbar from "./Navbar";
 import {
   Form,
   FormControl,
@@ -64,6 +64,7 @@ export function UpdatePassword() {
         backgroundRepeat: "no-repeat",
       }}
     >
+    
       <div className="w-full max-w-md p-6 drop-shadow-md rounded-md bg-opacity-25 bg-black">
         <div className="flex justify-center gap-3 ">
           <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10" />
