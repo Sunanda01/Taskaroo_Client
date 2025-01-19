@@ -12,7 +12,7 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { OtpVerify } from "./pages/OtpVerify";
 import { LandingPage } from "./pages/LandingPage";
 import { UpdateTodo } from "./pages/UpdateTodo";
-import { Home2 } from "./pages/Home2";
+
 
 export default function App() {
   return (
@@ -32,6 +32,7 @@ export default function App() {
           {/* <Route path="/errorPage" element={<ErrorPage />} /> */}
           <Route path="/verify-otp" element={<OtpVerify />} />
           <Route path="/landing-page" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/update-todo/:todoId" element={<UpdateTodo />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

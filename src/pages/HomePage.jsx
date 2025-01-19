@@ -38,7 +38,7 @@ export function HomePage() {
   return (
     <>
       <div
-        className="min-h-screen flex flex-col overflow-x-auto"
+        className="min-h-screen flex flex-col overflow-x-auto "
         style={{
           backgroundImage: "url('/background.png')",
           backgroundSize: "cover",

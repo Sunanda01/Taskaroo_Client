@@ -152,9 +152,11 @@ export function RegisterForm() {
               </FormControl>
               <FormControl>
                 <button
-                  className=" rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-green-700  text-md font-bold w-20 h-8 hover:bg-green-800 focus:border-white text-white"
+                  className={`${img?" ":"cursor-not-allowed "} rounded-md shadow-sm focus:ring-2  focus:ring-offset-2 focus:ring-blue-500 bg-green-700  text-md font-bold w-20 h-8 hover:bg-green-800 focus:border-white text-white`}
                   onClick={upload}
                   disabled={!img}
+                  
+    
                 >
                   Upload
                 </button>

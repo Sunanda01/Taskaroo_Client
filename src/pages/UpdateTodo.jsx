@@ -39,7 +39,7 @@ export function UpdateTodo()
   return (
     <>
    
-    <div className='h-dvh flex flex-col' style={{
+    <div className='min-h-screen flex flex-col' style={{
       backgroundImage:"url('/background.png')",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -47,7 +47,7 @@ export function UpdateTodo()
     }}>
       
       <Navbar/>
-      <div className=" flex items-center justify-center h-full">
+      <div className=" flex  justify-center h-full  mt-5">
                 <Card className="w-[400px] bg-white bg-opacity-5 h-max flex flex-col   ">
                   <CardHeader>
                     <CardTitle className="text-white text-3xl font-bold">

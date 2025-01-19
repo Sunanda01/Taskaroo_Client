@@ -18,7 +18,7 @@ function Navbar() {
         <img src="/Taskaroo.png" alt="Logo" className="h-16 w-16 " />
         <div className="  text-white flex flex-col items-center gap-1">
           <h1 className="font-bold flex text-4xl">Welcome </h1>
-          <h1 className="font-semibold underline text-3xl flex">
+          <h1 className="font-semibold underline text-3xl text-lime-500 flex">
             Sunanda Sadhukhan
           </h1>
         </div>
