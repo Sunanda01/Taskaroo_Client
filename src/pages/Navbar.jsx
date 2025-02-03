@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 function Navbar() {
   // const location=useLocation();
-  const profilePicture = localStorage.getItem("ProfileImage");
+  // const profilePicture = localStorage.getItem("ProfileImage");
   return (
     <div className="  items-center justify-center flex mt-2">
       <div className="flex  justify-evenly items-center  w-auto gap-28 ">
@@ -27,7 +27,7 @@ function Navbar() {
             <NavigationMenuItem>
               <NavigationMenuTrigger>
                 <Avatar>
-                  <AvatarImage src={profilePicture} />
+                  <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>Avatar</AvatarFallback>
                 </Avatar>
               </NavigationMenuTrigger>

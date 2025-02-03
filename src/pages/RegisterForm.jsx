@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   Form,
@@ -14,6 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
+import api from "@/api";
 
 const formSchema = z
   .object({
@@ -37,9 +39,9 @@ const formSchema = z
   });
 
 export function RegisterForm() {
+  const navigate=useNavigate();
   const cloudinaryUrl = import.meta.env.VITE_CLOUDINARY_URL;
   const [img, setImg] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,7 +52,8 @@ export function RegisterForm() {
     },
   });
 
-  const upload = async () => {
+
+  async function onSubmit(values) {
     if (!img) {
       alert("Please select a file before uploading.");
       return;
@@ -67,32 +70,20 @@ export function RegisterForm() {
       });
 
       const data = await res.json();
-      console.log("Response:", data);
 
       if (!res.ok) {
         throw new Error("Upload failed");
       }
 
-      // Add the uploaded file info to the state
-      setUploadedImageUrl(data.secure_url);
-      console.log("Uploaded successfully:", data);
-    } catch (err) {
-      console.error("Upload failed:", err.message);
-    }
-  };
-
-  async function onSubmit(values) {
-    if (!uploadedImageUrl) {
-      alert("Please upload a profile picture before submitting.");
-      return;
-    }
-    try {
-      const finalData = {
-        ...values,
-        profilePicture: uploadedImageUrl, // Add secure URL to form data
+    
+    const finalData = {
+        name:values.name,
+        email:values.email,
+        password:values.password,
+        profileImg: data.secure_url, 
       };
-      localStorage.setItem("ProfileImage", uploadedImageUrl);
-      console.log(finalData);
+    await api.post(`${import.meta.env.VITE_BACKEND_URL}/register`,finalData);
+    navigate("/verify-otp");
     } catch (err) {
       console.log(err, "Error during submission");
     }
@@ -144,13 +135,15 @@ export function RegisterForm() {
               <FormControl className="text-white font-bold text-sm ">
                 <input
                   type="file"
+                  accept="image/*"
                   onChange={(e) => {
                     const file = e.target.files[0];
                     setImg(file);
+                    console.log("SetIMG in state variable");
                   }}
                 />
               </FormControl>
-              <FormControl>
+              {/* <FormControl>
                 <button
                   className={`${img?" ":"cursor-not-allowed "} rounded-md shadow-sm focus:ring-2  focus:ring-offset-2 focus:ring-blue-500 bg-green-700  text-md font-bold w-20 h-8 hover:bg-green-800 focus:border-white text-white`}
                   onClick={upload}
@@ -160,7 +153,7 @@ export function RegisterForm() {
                 >
                   Upload
                 </button>
-              </FormControl>
+              </FormControl> */}
               <FormMessage />
             </FormItem>
 

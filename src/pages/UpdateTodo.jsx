@@ -48,7 +48,7 @@ export function UpdateTodo()
       
       <Navbar/>
       <div className=" flex  justify-center h-full  mt-5">
-                <Card className="w-[400px] bg-white bg-opacity-5 h-max flex flex-col   ">
+                <Card className="w-[400px] bg-white bg-opacity-10 h-max flex flex-col   ">
                   <CardHeader>
                     <CardTitle className="text-white text-3xl font-bold">
                       Update Todo

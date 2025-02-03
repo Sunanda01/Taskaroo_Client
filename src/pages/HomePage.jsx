@@ -48,7 +48,7 @@ export function HomePage() {
       >
         <Navbar />
         <div className=" flex w-full justify-between px-4 mt-8  ">
-          <Card className="w-[400px] bg-white bg-opacity-5 h-max   ">
+          <Card className="w-[400px] bg-white bg-opacity-15 h-max   ">
             <CardHeader>
               <CardTitle className="text-white text-3xl font-bold">
                 Create Todo
@@ -99,7 +99,7 @@ export function HomePage() {
           </Card>
 
           <div className="flex flex-col gap-2 w-[1000px] ">
-            <Card className="w-[800px] bg-black bg-opacity-5  flex items-end justify-end">
+            <Card className="w-[800px] bg-white bg-opacity-10 flex items-end justify-end">
               <div className="flex  flex-col">
                 <CardHeader className=" flex flex-row  w-full justify-between ">
                   <Label
