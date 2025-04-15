@@ -39,7 +39,7 @@ const formSchema = z
   });
 
 export function RegisterForm() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const cloudinaryUrl = import.meta.env.VITE_CLOUDINARY_URL;
   const [img, setImg] = useState(null);
   const form = useForm({
@@ -52,21 +52,20 @@ export function RegisterForm() {
     },
   });
 
-
   async function onSubmit(values) {
     if (!img) {
       alert("Please select a file before uploading.");
       return;
     }
 
-    const form = new FormData();
-    form.append("file", img);
-    form.append("upload_preset", "UploadProfileImg");
+    const formData = new FormData();
+    formData.append("file", img);
+    formData.append("upload_preset", "UploadProfileImg");
 
     try {
       const res = await fetch(cloudinaryUrl, {
         method: "POST",
-        body: form,
+        body: formData,
       });
 
       const data = await res.json();
@@ -75,15 +74,14 @@ export function RegisterForm() {
         throw new Error("Upload failed");
       }
 
-    
-    const finalData = {
-        name:values.name,
-        email:values.email,
-        password:values.password,
-        profileImg: data.secure_url, 
+      const finalData = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        profileImg: data.secure_url,
       };
-    await api.post(`${import.meta.env.VITE_BACKEND_URL}/register`,finalData);
-    navigate("/verify-otp");
+      await api.post(`${import.meta.env.VITE_BACKEND_URL}/register`, finalData);
+      navigate("/login");
     } catch (err) {
       console.log(err, "Error during submission");
     }

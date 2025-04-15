@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
+import api from "@/api";
 const formSchema = z.object({
   email: z
     .string()
@@ -23,6 +23,7 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,6 +33,14 @@ export function LoginForm() {
   });
   async function onSubmit(values) {
     try {
+      const res = await api.post(
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        values
+      );
+      console.log(res.data);
+      localStorage.setItem("accessToken", res.data.user.accessToken);
+      localStorage.setItem("userData", JSON.stringify(res.data.user));
+      navigate("/home");
       console.log(values);
     } catch (err) {
       console.log(err, "Error during submission");

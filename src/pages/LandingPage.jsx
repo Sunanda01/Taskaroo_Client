@@ -6,7 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Calendar } from "@/components/ui/calendar"
+import { Calendar } from "@/components/ui/calendar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,7 +25,7 @@ import {
 import { useState } from "react";
 export function LandingPage() {
   const [date, setDate] = useState(new Date());
-   return (
+  return (
     <>
       <div
         className="h-dvh overflow-y-hidden "
@@ -36,11 +36,7 @@ export function LandingPage() {
           backgroundRepeat: "no-repeat",
         }}
       >
-       
-
         <div className="flex items-center justify-evenly h-full mt-20 text-white font-bold text-xl">
-        
-
           <Accordion type="single" collapsible className="w-72">
             <AccordionItem value="item-1">
               <AccordionTrigger>Is it Free?</AccordionTrigger>
@@ -117,17 +113,13 @@ export function LandingPage() {
           </div>
 
           <Calendar
-      mode="single"
-      selected={date}
-      onSelect={setDate}
-      className="rounded-md border shadow"
-    />
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            className="rounded-md border shadow"
+          />
         </div>
       </div>
     </>
   );
 }
-
-
-
-

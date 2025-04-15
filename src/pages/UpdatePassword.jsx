@@ -13,6 +13,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import api from "@/api";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z
   .object({
@@ -38,6 +40,7 @@ const formSchema = z
   });
 
 export function UpdatePassword() {
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,6 +51,12 @@ export function UpdatePassword() {
   });
   async function onSubmit(values) {
     try {
+      await api
+        .patch(`${import.meta.env.VITE_BACKEND_URL}/updatePassword`, values)
+        .then((data) => {
+          alert(data?.data?.msg);
+          navigate("/home");
+        });
       console.log(values);
     } catch (err) {
       console.log(err, "Error during submission");
@@ -64,7 +73,6 @@ export function UpdatePassword() {
         backgroundRepeat: "no-repeat",
       }}
     >
-    
       <div className="w-full max-w-md p-6 drop-shadow-md rounded-md bg-opacity-25 bg-black">
         <div className="flex justify-center gap-3 ">
           <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10" />

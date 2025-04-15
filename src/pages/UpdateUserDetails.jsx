@@ -13,21 +13,38 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import api from "@/api";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "name must have 2 characters" }).max(50),
 });
 
 export function UpdateUserDetails() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { userDetails } = location.state || " ";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "Sunanda Sadhukhan",
-      email: "sunandasadhukhan1@gmail.com",
+      name: `${userDetails.name}`,
+      email: `${userDetails.email}`,
     },
   });
   async function onSubmit(values) {
     try {
+      await api
+        .patch(`${import.meta.env.VITE_BACKEND_URL}/updateUser`, values)
+        .then((data) => {
+          alert(data?.data?.msg);
+          const updateUser = {
+            ...JSON.parse(localStorage.getItem("userData")),
+            name: data?.data?.name,
+          };
+          localStorage.removeItem("userData");
+          localStorage.setItem("userData", JSON.stringify(updateUser));
+          navigate("/home");
+        });
       console.log(values);
     } catch (err) {
       console.log(err, "Error during submission");
