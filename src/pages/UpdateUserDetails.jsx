@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-
+import ClipLoader from "react-spinners/ClipLoader";
 import {
   Form,
   FormControl,
@@ -16,12 +16,14 @@ import { Input } from "@/components/ui/input";
 import api from "@/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "name must have 2 characters" }).max(50),
 });
 
 export function UpdateUserDetails() {
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { userDetails } = location.state || " ";
@@ -34,6 +36,7 @@ export function UpdateUserDetails() {
   });
   async function onSubmit(values) {
     try {
+      setIsLoading(true);
       await api
         .patch(`${import.meta.env.VITE_BACKEND_URL}/updateUser`, values)
         .then((data) => {
@@ -50,6 +53,8 @@ export function UpdateUserDetails() {
     } catch (err) {
       const message = err?.response?.data?.message || err?.response?.data?.msg;
       toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -119,10 +124,15 @@ export function UpdateUserDetails() {
 
             <div className="flex justify-center">
               <Button
+                disabled={isLoading}
                 className=" focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
-                Update
+                {isLoading ? (
+                  <ClipLoader color="#ffffff" size={30} />
+                ) : (
+                  "Update"
+                )}
               </Button>
             </div>
           </form>

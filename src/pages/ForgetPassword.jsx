@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export function ForgetPassword() {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [step, setStep] = useState(1); // Manage steps (1: Enter Email, 2: Enter OTP)
   const [data, setData] = useState({
@@ -16,41 +17,56 @@ export function ForgetPassword() {
   const { secondLeft, start } = useCountdown();
   // Handler for email submission
   const handleEmailSubmit = async (emailValue) => {
-    setData((prevData) => ({
-      ...prevData,
-      email: emailValue, // Save the email
-    }));
-    const email = emailValue;
-    console.log(email);
-    const res = await api.post(
-      `${import.meta.env.VITE_BACKEND_URL}/generateotp`,
-      {
-        email,
-      }
-    );
-    toast.success(res?.data?.msg);
-    setStep(2); // Move to the OTP step
-    start(120);
+    try {
+      setIsLoading(true);
+      setData((prevData) => ({
+        ...prevData,
+        email: emailValue, // Save the email
+      }));
+      const email = emailValue;
+      console.log(email);
+      const res = await api.post(
+        `${import.meta.env.VITE_BACKEND_URL}/generateotp`,
+        {
+          email,
+        }
+      );
+      toast.success(res?.data?.msg);
+      setStep(2); // Move to the OTP step
+      start(120);
+    } catch (err) {
+      const message = err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Handler for OTP submission
   const handleOtpSubmit = async (otpValue) => {
-    setData((prevData) => ({
-      ...prevData,
-      otp: otpValue, // Save the OTP
-    }));
-    const payload = {
-      email: data.email,
-      enteredOTP: Number(otpValue),
-    };
-    console.log(payload);
-    const res = await api.post(
-      `${import.meta.env.VITE_BACKEND_URL}/verifyotp`,
-      payload
-    );
-    console.log(res?.data);
-    toast.success(res?.data?.msg);
-    navigate("/setPassword", { state: { email: data.email } });
+    try{
+      setData((prevData) => ({
+        ...prevData,
+        otp: otpValue, // Save the OTP
+      }));
+      const payload = {
+        email: data.email,
+        enteredOTP: Number(otpValue),
+      };
+      console.log(payload);
+      const res = await api.post(
+        `${import.meta.env.VITE_BACKEND_URL}/verifyotp`,
+        payload
+      );
+      console.log(res?.data);
+      toast.success(res?.data?.msg);
+      navigate("/setPassword", { state: { email: data.email } });
+    }catch (err) {
+      const message = err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleResendotp = async () => {
@@ -66,6 +82,8 @@ export function ForgetPassword() {
       const message =
         error?.response?.data?.message || error?.response?.data?.msg;
       toast.error(message);
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -82,13 +100,13 @@ export function ForgetPassword() {
       <div className="w-full max-w-md p-6 shadow-md rounded-md bg-black bg-opacity-25">
         {step === 1 && (
           // Render EnterEmail component
-          <EnterEmail
+          <EnterEmail disabled={isLoading}
             onSubmit={(values) => handleEmailSubmit(values.email)} // Pass handler for email submission
           />
         )}
         {step === 2 && (
           // Render EnterOtp component
-          <EnterOtp
+          <EnterOtp disabled={isLoading}
             onSubmit={(values) => handleOtpSubmit(values.otp)} // Pass handler for OTP submission
             secondLeft={secondLeft}
             onResendotp={handleResendotp}

@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import ClipLoader from "react-spinners/ClipLoader";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,7 @@ const formSchema = z
   });
 
 export function RegisterForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const cloudinaryUrl = import.meta.env.VITE_CLOUDINARY_URL;
   const [img, setImg] = useState(null);
@@ -57,7 +59,7 @@ export function RegisterForm() {
       alert("Please select a file before uploading.");
       return;
     }
-
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("file", img);
     formData.append("upload_preset", "UploadProfileImg");
@@ -84,19 +86,20 @@ export function RegisterForm() {
         `${import.meta.env.VITE_BACKEND_URL}/register`,
         finalData
       );
-      const email=finalData.email;
+      const email = finalData.email;
       console.log(response?.data);
       // localStorage.setItem("userData", JSON.stringify(response?.data?.user));
       await api
         .post(`${import.meta.env.VITE_BACKEND_URL}/generateotp`, { email })
         .then((data) => {
           toast.success(data?.data?.msg);
-          navigate("/verify-otp",{state:{email}});
+          navigate("/verify-otp", { state: { email } });
         });
     } catch (err) {
-      const message =
-      err?.response?.data?.message || err?.response?.data?.msg;
+      const message = err?.response?.data?.message || err?.response?.data?.msg;
       toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -117,6 +120,11 @@ export function RegisterForm() {
             SignUp
           </h1>
         </div>
+        {isLoading && (
+          <div className="flex justify-center items-center">
+            <ClipLoader color="#3B82F6" size={40} />
+          </div>
+        )}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -235,10 +243,11 @@ export function RegisterForm() {
 
             <div className="flex justify-center flex-col items-center">
               <Button
+                disabled={isLoading}
                 className=" focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
-                Submit
+                {isLoading ? "Submitting..." : "Submit"}
               </Button>
               <div className="text-white text-md font-bold flex justify-center items-center gap-2 mt-4">
                 <Link to="/login" className="flex items-center">

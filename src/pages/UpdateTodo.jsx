@@ -14,9 +14,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { redirect, useLocation, useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 import api from "@/api";
 import toast from "react-hot-toast";
 export function UpdateTodo() {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { todo } = location.state || {};
@@ -36,6 +38,7 @@ export function UpdateTodo() {
   async function onSubmit(e) {
     e.preventDefault();
     try {
+      setIsLoading(true);
       await api
         .patch(
           `${import.meta.env.VITE_BACKEND_URL}/updateTodo/${todo._id}`,
@@ -48,8 +51,10 @@ export function UpdateTodo() {
         });
       console.log("Form Submitted: ", formData);
     } catch (err) {
-      const message=err?.response?.data?.message || err?.response?.data?.msg;
+      const message = err?.response?.data?.message || err?.response?.data?.msg;
       toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -100,10 +105,15 @@ export function UpdateTodo() {
 
                 <CardFooter className="flex justify-center mt-3 ">
                   <Button
+                    disabled={isLoading}
                     type="submit"
                     className="flex w-28 focus:outline-none mt-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
-                    Update
+                    {isLoading ? (
+                      <ClipLoader color="#ffffff" size={30} />
+                    ) : (
+                      "Update"
+                    )}
                   </Button>
                 </CardFooter>
               </form>

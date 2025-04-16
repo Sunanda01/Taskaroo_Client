@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import Navbar from "./Navbar";
+import ClipLoader from "react-spinners/ClipLoader";
 import {
   Form,
   FormControl,
@@ -16,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import api from "@/api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const formSchema = z
   .object({
@@ -41,6 +43,7 @@ const formSchema = z
   });
 
 export function UpdatePassword() {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -52,6 +55,7 @@ export function UpdatePassword() {
   });
   async function onSubmit(values) {
     try {
+      setIsLoading(true);
       await api
         .patch(`${import.meta.env.VITE_BACKEND_URL}/updatePassword`, values)
         .then((data) => {
@@ -60,8 +64,10 @@ export function UpdatePassword() {
         });
       console.log(values);
     } catch (err) {
-      const message=err?.response?.data?.message || err?.response?.data?.msg;
+      const message = err?.response?.data?.message || err?.response?.data?.msg;
       toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -149,10 +155,15 @@ export function UpdatePassword() {
             />
             <div className="flex justify-center">
               <Button
+                disabled={isLoading}
                 className=" focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
-                Update
+                {isLoading ? (
+                  <ClipLoader color="#ffffff" size={30} />
+                ) : (
+                  "Update"
+                )}
               </Button>
             </div>
           </form>

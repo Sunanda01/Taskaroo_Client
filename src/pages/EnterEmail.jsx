@@ -21,7 +21,7 @@ const formSchema = z.object({
     .email({ message: "Must be a valid email" }),
 });
 
-export function EnterEmail({ onSubmit }) {
+export function EnterEmail({ onSubmit, disabled }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -73,10 +73,11 @@ export function EnterEmail({ onSubmit }) {
 
           <div className="flex justify-center">
             <Button
+              disabled={disabled}
               className=" focus:outline-none py-2 px-4  bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               type="submit"
             >
-              Submit
+              {disabled ? "Submiting...." : "Submit"}
             </Button>
           </div>
         </form>

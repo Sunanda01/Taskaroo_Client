@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import Navbar from "./Navbar";
+
 import {
   Form,
   FormControl,
@@ -16,6 +16,8 @@ import { Input } from "@/components/ui/input";
 import api from "@/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 const formSchema = z
   .object({
@@ -36,8 +38,9 @@ const formSchema = z
   });
 
 export function SetPassword() {
-    const location=useLocation();
-    const email=location.state.email;
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const email = location.state.email;
   const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -48,11 +51,12 @@ export function SetPassword() {
   });
   async function onSubmit(values) {
     try {
-        const payload={
-            email:email,
-            password:values.newPassword
-        }
-        console.log(payload);
+      setIsLoading(true);
+      const payload = {
+        email: email,
+        password: values.newPassword,
+      };
+      console.log(payload);
       await api
         .patch(`${import.meta.env.VITE_BACKEND_URL}/forgetPassword`, payload)
         .then((data) => {
@@ -61,8 +65,10 @@ export function SetPassword() {
         });
       console.log(values);
     } catch (err) {
-      const message=err?.response?.data?.message || err?.response?.data?.msg;
+      const message = err?.response?.data?.message || err?.response?.data?.msg;
       toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -86,7 +92,6 @@ export function SetPassword() {
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-           
             <FormField
               control={form.control}
               name="newPassword"
@@ -133,7 +138,11 @@ export function SetPassword() {
                 className=" focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
-                Update Password
+                {isLoading ? (
+                  <ClipLoader color="#ffffff" size={40} />
+                ) : (
+                  "Update Password"
+                )}
               </Button>
             </div>
           </form>

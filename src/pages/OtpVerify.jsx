@@ -3,6 +3,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import useCountdown from "@/CustomHooks/useCountdown";
+import ClipLoader from "react-spinners/ClipLoader";
+import { useState } from "react";
+
 import {
   Form,
   FormControl,
@@ -33,6 +36,7 @@ const formSchema = z.object({
 });
 
 export function OtpVerify() {
+  const [isLoading, setIsLoading] = useState(false);
   const { secondLeft, start } = useCountdown();
   const location = useLocation();
   const email = location.state?.email;
@@ -53,6 +57,7 @@ export function OtpVerify() {
 
   async function onSubmit(data) {
     try {
+      setIsLoading(true);
       const payload = {
         email,
         enteredOTP: Number(data.otp),
@@ -69,11 +74,14 @@ export function OtpVerify() {
     } catch (err) {
       const message = err?.response?.data?.message || err?.response?.data?.msg;
       toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function resendOtp() {
     try {
+      setIsLoading(true);
       const res = await api.post(
         `${import.meta.env.VITE_BACKEND_URL}/generateotp`,
         {
@@ -81,14 +89,16 @@ export function OtpVerify() {
         }
       );
       toast.success(res?.data?.msg);
-      start(120)
+      start(120);
     } catch (error) {
       const message =
         error?.response?.data?.message || error?.response?.data?.msg;
       toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
   }
-const resendButtonClass = `flex focus:outline-none py-2 px-4 w-28 
+  const resendButtonClass = `flex focus:outline-none py-2 px-4 w-28 
     ${
       secondLeft > 0
         ? "bg-red-300 pointer-events-none"
@@ -104,6 +114,11 @@ const resendButtonClass = `flex focus:outline-none py-2 px-4 w-28
         backgroundRepeat: "no-repeat",
       }}
     >
+      {isLoading && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+          <ClipLoader color="#ffffff" size={60} />
+        </div>
+      )}
       <div className="w-full max-w-md p-6 shadow-md rounded-md bg-opacity-25 bg-black">
         <div className="flex gap-3 ">
           <h1 className="text-2xl font-bold mt-2 text-white">
@@ -150,10 +165,11 @@ const resendButtonClass = `flex focus:outline-none py-2 px-4 w-28
 
             <div className="flex justify-center items-center flex-col">
               <Button
+              disabled={isLoading}
                 type="submit"
                 className="flex  focus:outline-none py-2 px-4 w-28 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Submit
+                {isLoading ? 'Submitting...' : 'Submit'}
               </Button>
               {/* <Button
                 onClick={resendOtp}
@@ -164,18 +180,20 @@ const resendButtonClass = `flex focus:outline-none py-2 px-4 w-28
                 Resend OTP
               </Button> */}
               <Button
-              type="button"
-              onClick={resendOtp}
-              // disabled={secondLeft > 0}
-              aria-disabled={secondLeft > 0}
-              className={resendButtonClass}
-              style={{ marginTop: "0.9rem", display: "block" }}
-            >
-              Resend OTP
-            </Button>
-            <div className="text-white mt-2 font-semibold font-serif">
-              {secondLeft > 0 ? `Resend OTP in ( ${secondLeft} seconds )` : ""}
-            </div>
+                type="button"
+                onClick={resendOtp}
+                disabled={isLoading}
+                aria-disabled={secondLeft > 0}
+                className={resendButtonClass}
+                style={{ marginTop: "0.9rem", display: "block" }}
+              >
+                {isLoading?'Wait':'Resend OTP'}
+              </Button>
+              <div className="text-white mt-2 font-semibold font-serif">
+                {secondLeft > 0
+                  ? `Resend OTP in ( ${secondLeft} seconds )`
+                  : ""}
+              </div>
             </div>
           </form>
         </Form>

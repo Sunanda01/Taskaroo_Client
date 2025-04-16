@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 import {
   Form,
   FormControl,
@@ -15,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import api from "@/api";
 import { toast } from "react-hot-toast";
+import { useState } from "react";
 const formSchema = z.object({
   email: z
     .string()
@@ -24,6 +26,7 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -34,6 +37,7 @@ export function LoginForm() {
   });
   async function onSubmit(values) {
     try {
+      setIsLoading(true);
       const res = await api.post(
         `${import.meta.env.VITE_BACKEND_URL}/login`,
         values
@@ -59,9 +63,12 @@ export function LoginForm() {
         navigate("/verify-otp", { state: { email } });
       } else {
         console.log(error, "Error during submission");
-        const message = error?.response?.data?.msg || error?.response?.data?.message;
+        const message =
+          error?.response?.data?.msg || error?.response?.data?.message;
         toast.error(message);
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -134,10 +141,11 @@ export function LoginForm() {
                 Forgot Password ?
               </Link>
               <Button
+              disabled={isLoading}
                 className="flex mt-4 w-36 focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
-                Submit
+                {isLoading ? "Submiting..." : "Submit"}
               </Button>
               <div className="text-white text-md font-bold flex justify-center items-center gap-2 mt-4">
                 <Link to="/register" className="flex items-center">

@@ -17,6 +17,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import PropTypes from "prop-types";
+import { ClipLoader } from "react-spinners";
 
 const FormSchema = z.object({
   otp: z
@@ -29,7 +30,7 @@ const FormSchema = z.object({
     }),
 });
 
-export function EnterOtp({ onSubmit, secondLeft, onResendotp }) {
+export function EnterOtp({ onSubmit, secondLeft, onResendotp, disabled }) {
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -101,20 +102,33 @@ export function EnterOtp({ onSubmit, secondLeft, onResendotp }) {
           />
           <div className="flex flex-col items-center justify-center">
             <Button
+              disabled={disabled}
               type="submit"
               className="flex  focus:outline-none py-2 px-4 w-28 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              Submit
+              {disabled ? (
+                <div className="flex justify-center items-center">
+                  <ClipLoader color="#3B82F6" size={40} />
+                </div>
+              ) : (
+                "Submit"
+              )}
             </Button>
             <Button
               type="button"
               onClick={onResendotp}
-              // disabled={secondLeft > 0}
+              disabled={disabled}
               aria-disabled={secondLeft > 0}
               className={resendButtonClass}
               style={{ marginTop: "0.9rem", display: "block" }}
             >
-              Resend OTP
+              {disabled ? (
+                <div className="flex justify-center items-center">
+                  <ClipLoader color="#ffffff" size={40} />
+                </div>
+              ) : (
+                "Resend OTP"
+              )}
             </Button>
             <div className="text-white mt-2 font-semibold font-serif">
               {secondLeft > 0 ? `Resend OTP in ( ${secondLeft} seconds )` : ""}
