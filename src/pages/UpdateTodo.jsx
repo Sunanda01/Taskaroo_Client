@@ -95,6 +95,7 @@ export function UpdateTodo() {
                       Description
                     </Label>
                     <Textarea
+                      className="text-justify"
                       id="description"
                       name="description"
                       value={formData.description}

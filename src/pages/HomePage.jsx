@@ -185,7 +185,7 @@ export function HomePage() {
                         <h3 className="text-2xl font-semibold mb-3">
                           {items.title}
                         </h3>
-                        <p className="text-sm text-gray-200 whitespace-pre-wrap break-words leading-relaxed">
+                        <p className="text-sm text-gray-200 whitespace-pre-wrap break-words leading-relaxed text-justify">
                           {items.description}
                         </p>
                       </div>

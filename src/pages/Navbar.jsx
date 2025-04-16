@@ -39,7 +39,7 @@ function Navbar({ userDetails }) {
     <div className="  items-center justify-center flex mt-2">
       <div className="flex  justify-evenly items-center  w-auto gap-28 ">
         <img src="/Taskaroo.png" alt="Logo" className="h-16 w-16 " />
-        <div className="  text-white flex flex-col items-center gap-1">
+        <div className="  text-white flex flex-col items-center gap-1 italic normal-case">
           <h1 className="font-bold flex text-4xl">Welcome </h1>
           <h1 className="font-semibold underline text-3xl text-lime-500 flex">
             {userDetails.name}
