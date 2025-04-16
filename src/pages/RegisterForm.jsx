@@ -14,8 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
 import api from "@/api";
+import toast from "react-hot-toast";
 
 const formSchema = z
   .object({
@@ -80,10 +80,23 @@ export function RegisterForm() {
         password: values.password,
         profileImg: data.secure_url,
       };
-      await api.post(`${import.meta.env.VITE_BACKEND_URL}/register`, finalData);
-      navigate("/login");
+      const response = await api.post(
+        `${import.meta.env.VITE_BACKEND_URL}/register`,
+        finalData
+      );
+      const email=finalData.email;
+      console.log(response?.data);
+      // localStorage.setItem("userData", JSON.stringify(response?.data?.user));
+      await api
+        .post(`${import.meta.env.VITE_BACKEND_URL}/generateotp`, { email })
+        .then((data) => {
+          toast.success(data?.data?.msg);
+          navigate("/verify-otp",{state:{email}});
+        });
     } catch (err) {
-      console.log(err, "Error during submission");
+      const message =
+      err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
     }
   }
 

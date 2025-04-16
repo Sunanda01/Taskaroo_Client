@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import api from "@/api";
 import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "name must have 2 characters" }).max(50),
@@ -36,7 +37,7 @@ export function UpdateUserDetails() {
       await api
         .patch(`${import.meta.env.VITE_BACKEND_URL}/updateUser`, values)
         .then((data) => {
-          alert(data?.data?.msg);
+          toast.success(data?.data?.msg);
           const updateUser = {
             ...JSON.parse(localStorage.getItem("userData")),
             name: data?.data?.name,
@@ -47,7 +48,8 @@ export function UpdateUserDetails() {
         });
       console.log(values);
     } catch (err) {
-      console.log(err, "Error during submission");
+      const message = err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
     }
   }
 

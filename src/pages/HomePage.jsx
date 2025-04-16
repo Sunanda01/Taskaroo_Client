@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import api from "@/api";
+import toast from "react-hot-toast";
 
 export function HomePage() {
   const userDetails = JSON.parse(localStorage.getItem("userData"));
@@ -58,13 +59,14 @@ export function HomePage() {
 
       if (newTodo) {
         setTodoItems((prevItems) => [newTodo, ...prevItems]); // prepend new item
-        alert(response?.data.msg);
+        toast.success(response?.data.msg);
         setformData({ title: "", description: "" });
       }
 
       console.log("Form Submitted: ", formData);
     } catch (err) {
-      console.log(err, "Error during submission");
+      const message=err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
     }
   }
 
@@ -73,13 +75,14 @@ export function HomePage() {
       setTodoItems((prevItems) =>
         prevItems.filter((items) => items._id !== id)
       );
-      await api
+     await api
         .delete(`${import.meta.env.VITE_BACKEND_URL}/deleteTodo/${id}`)
         .then((data) => {
-          alert(data?.data.msg);
+          toast.success(data?.data.msg);
         });
     } catch (err) {
-      console.log(err);
+      const message=err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
       setTodoItems((prevItems) =>
         prevItems.filter((items) => items._id !== id)
       );
@@ -206,7 +209,9 @@ export function HomePage() {
                       </div>
                     </Card>
                   ))
-                : null}
+                : (
+                  <p className="text-center text-gray-500 text-2xl">No tasks yet. Start by adding one!</p>
+                )}
             </div>
           </div>
         </div>

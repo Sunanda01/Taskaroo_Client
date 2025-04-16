@@ -20,41 +20,41 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-api.interceptors.response.use(
-    (response) => response, // If response is OK, return it
-    async (error) => {
-      const originalRequest = error.config;
+// api.interceptors.response.use(
+//     (response) => response, // If response is OK, return it
+//     async (error) => {
+//       const originalRequest = error.config;
       
-      // If Unauthorized (401) and request has not been retried yet
-      if (error.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
+//       // If Unauthorized (401) and request has not been retried yet
+//       if (error.response?.status === 403 && !originalRequest._retry) {
+//         originalRequest._retry = true;
         
-        try {
-          // Get refresh token
-        //   const refreshToken = getRefreshToken();
-        //   if (!refreshToken) {
-        //     console.error("No refresh token available.");
-        //     return Promise.reject(error);
-        //   }
+//         try {
+//           // Get refresh token
+//         //   const refreshToken = getRefreshToken();
+//         //   if (!refreshToken) {
+//         //     console.error("No refresh token available.");
+//         //     return Promise.reject(error);
+//         //   }
   
-          // Request a new access token
-          const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/refreshToken`, {},{withCredentials:true});
+//           // Request a new access token
+//           const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/refreshToken`, {},{withCredentials:true});
   
-          // Save new tokens
-        //   const { accessToken, refreshToken: newRefreshToken } = response.data;
+//           // Save new tokens
+//         //   const { accessToken, refreshToken: newRefreshToken } = response.data;
           
   
-          // Retry original request with new token
-          originalRequest.headers.Authorization = `Bearer ${response.user.accessToken}`;
-          return api(originalRequest);
-        } catch (refreshError) {
-          console.error("Failed to refresh token:", refreshError);
-          return Promise.reject(refreshError);
-        }
-      }
+//           // Retry original request with new token
+//           originalRequest.headers.Authorization = `Bearer ${response.user.accessToken}`;
+//           return api(originalRequest);
+//         } catch (refreshError) {
+//           console.error("Failed to refresh token:", refreshError);
+//           return Promise.reject(refreshError);
+//         }
+//       }
   
-      return Promise.reject(error);
-    }
-  );
+//       return Promise.reject(error);
+//     }
+//   );
   
   export default api;

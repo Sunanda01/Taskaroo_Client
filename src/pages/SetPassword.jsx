@@ -14,16 +14,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import api from "@/api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const formSchema = z
   .object({
-    oldPassword: z
-      .string()
-      .min(1, { message: "This is required" })
-      .min(5)
-      .max(10),
     newPassword: z
       .string()
       .min(1, { message: "This is required" })
@@ -40,23 +35,29 @@ const formSchema = z
     message: "Passwords do not match",
   });
 
-export function UpdatePassword() {
+export function SetPassword() {
+    const location=useLocation();
+    const email=location.state.email;
   const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      oldPassword: "",
       newPassword: "",
       confirmNewPassword: "",
     },
   });
   async function onSubmit(values) {
     try {
+        const payload={
+            email:email,
+            password:values.newPassword
+        }
+        console.log(payload);
       await api
-        .patch(`${import.meta.env.VITE_BACKEND_URL}/updatePassword`, values)
+        .patch(`${import.meta.env.VITE_BACKEND_URL}/forgetPassword`, payload)
         .then((data) => {
           toast.success(data?.data?.msg);
-          navigate("/home");
+          navigate("/login");
         });
       console.log(values);
     } catch (err) {
@@ -85,27 +86,7 @@ export function UpdatePassword() {
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="oldPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="block text-sm font-bold text-blue-500  ">
-                    Old Password
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Enter Your Password"
-                      {...field}
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm  focus:border-blue-500"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+           
             <FormField
               control={form.control}
               name="newPassword"
@@ -152,7 +133,7 @@ export function UpdatePassword() {
                 className=" focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
-                Update
+                Update Password
               </Button>
             </div>
           </form>

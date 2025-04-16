@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import api from "@/api";
+import { toast } from "react-hot-toast";
 const formSchema = z.object({
   email: z
     .string()
@@ -37,13 +38,30 @@ export function LoginForm() {
         `${import.meta.env.VITE_BACKEND_URL}/login`,
         values
       );
-      console.log(res.data);
-      localStorage.setItem("accessToken", res.data.user.accessToken);
-      localStorage.setItem("userData", JSON.stringify(res.data.user));
-      navigate("/home");
-      console.log(values);
-    } catch (err) {
-      console.log(err, "Error during submission");
+      const user = res?.data?.user;
+      console.log(res.data.msg);
+      if (user?.verified) {
+        toast.success(`Welcome ${user?.name}`);
+        console.log(res.data);
+        localStorage.setItem("userData", JSON.stringify(user));
+        localStorage.setItem("accessToken", res?.data?.accessToken);
+        navigate("/home");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        const email = values.email;
+        console.log(email);
+        const res = await api.post(
+          `${import.meta.env.VITE_BACKEND_URL}/generateotp`,
+          { email }
+        );
+        toast.success(res?.data?.msg);
+        navigate("/verify-otp", { state: { email } });
+      } else {
+        console.log(error, "Error during submission");
+        const message = error?.response?.data?.msg || error?.response?.data?.message;
+        toast.error(message);
+      }
     }
   }
 

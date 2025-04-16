@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { redirect, useLocation, useNavigate } from "react-router-dom";
 import api from "@/api";
+import toast from "react-hot-toast";
 export function UpdateTodo() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,12 +43,13 @@ export function UpdateTodo() {
         )
         .then((data) => {
           console.log(data);
-          alert(data?.data.msg);
+          toast.success(data?.data.msg);
           navigate("/home");
         });
       console.log("Form Submitted: ", formData);
     } catch (err) {
-      console.log(err, "Error during submission");
+      const message=err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
     }
   }
   return (

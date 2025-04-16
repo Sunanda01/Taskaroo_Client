@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
+import useCountdown from "@/CustomHooks/useCountdown";
 import {
   Form,
   FormControl,
@@ -17,6 +17,9 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import toast from "react-hot-toast";
+import api from "@/api";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   otp: z
@@ -30,6 +33,10 @@ const formSchema = z.object({
 });
 
 export function OtpVerify() {
+  const { secondLeft, start } = useCountdown();
+  const location = useLocation();
+  const email = location.state?.email;
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,13 +52,48 @@ export function OtpVerify() {
   };
 
   async function onSubmit(data) {
-    console.log(data);
-    toast({
-      title: "OTP Submitted",
-      description: `Your OTP is ${data.otp}`,
-    });
+    try {
+      const payload = {
+        email,
+        enteredOTP: Number(data.otp),
+      };
+      const response = await api.post(
+        `${import.meta.env.VITE_BACKEND_URL}/verifyotp`,
+        payload
+      );
+      toast.success(response?.data?.msg);
+      localStorage.setItem("accessToken", response?.data?.accessToken);
+      const user = response?.data?.user;
+      localStorage.setItem("userData", JSON.stringify(user));
+      navigate("/home");
+    } catch (err) {
+      const message = err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
+    }
   }
 
+  async function resendOtp() {
+    try {
+      const res = await api.post(
+        `${import.meta.env.VITE_BACKEND_URL}/generateotp`,
+        {
+          email,
+        }
+      );
+      toast.success(res?.data?.msg);
+      start(120)
+    } catch (error) {
+      const message =
+        error?.response?.data?.message || error?.response?.data?.msg;
+      toast.error(message);
+    }
+  }
+const resendButtonClass = `flex focus:outline-none py-2 px-4 w-28 
+    ${
+      secondLeft > 0
+        ? "bg-red-300 pointer-events-none"
+        : "bg-red-500 hover:bg-red-600"
+    } text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-red-500`;
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-gray-100 "
@@ -113,13 +155,27 @@ export function OtpVerify() {
               >
                 Submit
               </Button>
-              <Button
+              {/* <Button
+                onClick={resendOtp}
                 className="flex w-28 bg-red-500 hover:bg-red-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 type="button"
                 style={{ marginTop: "0.9rem" }}
               >
                 Resend OTP
-              </Button>
+              </Button> */}
+              <Button
+              type="button"
+              onClick={resendOtp}
+              // disabled={secondLeft > 0}
+              aria-disabled={secondLeft > 0}
+              className={resendButtonClass}
+              style={{ marginTop: "0.9rem", display: "block" }}
+            >
+              Resend OTP
+            </Button>
+            <div className="text-white mt-2 font-semibold font-serif">
+              {secondLeft > 0 ? `Resend OTP in ( ${secondLeft} seconds )` : ""}
+            </div>
             </div>
           </form>
         </Form>

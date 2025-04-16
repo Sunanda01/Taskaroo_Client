@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -47,10 +46,6 @@ export function EnterOtp({ onSubmit, secondLeft, onResendotp }) {
 
   async function onSubmitHandler(data) {
     onSubmit(data);
-    toast({
-      title: "OTP Submitted",
-      description: `Your OTP is ${data.otp}`,
-    });
   }
 
   const resendButtonClass = `flex focus:outline-none py-2 px-4 w-28 

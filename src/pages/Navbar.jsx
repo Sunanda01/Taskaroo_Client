@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import api from "@/api";
+import toast from "react-hot-toast";
 function Navbar({ userDetails }) {
   if (!userDetails) {
     return <div>Loading.........</div>;
@@ -25,10 +26,11 @@ function Navbar({ userDetails }) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("userData");
           navigate("/login");
-          alert(data?.data?.msg);
+          toast.success(data?.data?.msg);
         });
     } catch (err) {
-      console.log(err);
+      const message=err?.response?.data?.message || err?.response?.data?.msg;
+      toast.error(message);
     }
   }
   console.log("userDetails", userDetails);

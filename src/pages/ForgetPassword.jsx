@@ -2,8 +2,12 @@ import { useState } from "react";
 import { EnterEmail } from "../pages/EnterEmail"; // Import EnterEmail component
 import { EnterOtp } from "../pages/EnterOtp"; // Import EnterOtp component
 import useCountdown from "@/CustomHooks/useCountdown";
+import api from "@/api";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export function ForgetPassword() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1); // Manage steps (1: Enter Email, 2: Enter OTP)
   const [data, setData] = useState({
     email: "",
@@ -11,31 +15,58 @@ export function ForgetPassword() {
   });
   const { secondLeft, start } = useCountdown();
   // Handler for email submission
-  const handleEmailSubmit = (emailValue) => {
+  const handleEmailSubmit = async (emailValue) => {
     setData((prevData) => ({
       ...prevData,
       email: emailValue, // Save the email
     }));
+    const email = emailValue;
+    console.log(email);
+    const res = await api.post(
+      `${import.meta.env.VITE_BACKEND_URL}/generateotp`,
+      {
+        email,
+      }
+    );
+    toast.success(res?.data?.msg);
     setStep(2); // Move to the OTP step
     start(120);
   };
 
   // Handler for OTP submission
-  const handleOtpSubmit = (otpValue) => {
+  const handleOtpSubmit = async (otpValue) => {
     setData((prevData) => ({
       ...prevData,
       otp: otpValue, // Save the OTP
     }));
-
-    console.log("Email:", data.email); // Log email for debugging
-    console.log("OTP:", otpValue); // Log OTP for debugging
-
-    // Add further actions, e.g., API calls for verification
+    const payload = {
+      email: data.email,
+      enteredOTP: Number(otpValue),
+    };
+    console.log(payload);
+    const res = await api.post(
+      `${import.meta.env.VITE_BACKEND_URL}/verifyotp`,
+      payload
+    );
+    console.log(res?.data);
+    toast.success(res?.data?.msg);
+    navigate("/setPassword", { state: { email: data.email } });
   };
 
-  const handleResendotp = () => {
-    console.log("Resending OTP");
-    start(120);
+  const handleResendotp = async () => {
+    try {
+      const email = data.email;
+      console.log(email);
+      await api.post(`${import.meta.env.VITE_BACKEND_URL}/generateotp`, {
+        email,
+      });
+      console.log("Resending OTP");
+      start(120);
+    } catch (error) {
+      const message =
+        error?.response?.data?.message || error?.response?.data?.msg;
+      toast.error(message);
+    }
   };
 
   return (
