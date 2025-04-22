@@ -8,7 +8,7 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 # Backend Repository
-🔗 **Link**: [[(https://github.com/Sunanda01/Taskaroo_Server.git)](https://github.com/Sunanda01/Taskaroo_Server.git)]
+🔗 **Link**: [[https://github.com/Sunanda01/Taskaroo_Server.git](https://github.com/Sunanda01/Taskaroo_Server.git)]
 
 ## Screen
 - Register Page
