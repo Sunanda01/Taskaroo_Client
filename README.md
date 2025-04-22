@@ -18,9 +18,7 @@ Currently, two official plugins are available:
 - Update Profile
 - Update Password
 - Forget Password
-
 <br/>
-
 ## Quick Glimpses 
 <table>
   <tr>
