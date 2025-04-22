@@ -19,6 +19,7 @@ Currently, two official plugins are available:
 - Update Password
 - Forget Password
 <br/>
+
 ## Quick Glimpses 
 <table>
   <tr>
