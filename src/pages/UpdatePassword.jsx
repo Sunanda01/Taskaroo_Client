@@ -78,9 +78,10 @@ export function UpdatePassword() {
         backgroundImage: "url('/3398381.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+        backgroundRepeat: "no-repeat", 
       }}
     >
+      
       <div className="w-full max-w-md p-6 drop-shadow-md rounded-md bg-opacity-25 bg-black">
         <div className="flex justify-center gap-3 ">
           <img src="/Taskaroo.png" alt="Logo" className="h-10 w-10" />
