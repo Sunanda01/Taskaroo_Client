@@ -89,6 +89,11 @@ export function LoginForm() {
             LogIn
           </h1>
         </div>
+        {isLoading && (
+          <div className="flex justify-center items-center">
+            <ClipLoader color="#3B82F6" size={40} />
+          </div>
+        )}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -141,7 +146,7 @@ export function LoginForm() {
                 Forgot Password ?
               </Link>
               <Button
-              disabled={isLoading}
+                disabled={isLoading}
                 className="flex mt-4 w-36 focus:outline-none py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >

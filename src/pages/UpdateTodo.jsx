@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { redirect, useLocation, useNavigate } from "react-router-dom";
+import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import api from "@/api";
 import toast from "react-hot-toast";
@@ -104,7 +104,12 @@ export function UpdateTodo() {
                   </div>
                 </div>
 
-                <CardFooter className="flex justify-center mt-3 ">
+                <CardFooter className="flex justify-evenly mt-3 ">
+                <Link to="/home">
+                <Button className="flex w-28 focus:outline-none mt-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  Home
+                </Button>
+              </Link>
                   <Button
                     disabled={isLoading}
                     type="submit"
